@@ -18,7 +18,7 @@ import com.example.Hospital.Model.Medico;
 import com.example.Hospital.Service.MedicoService;
 
 @RestController
-@RequestMapping("/api/v1/medicos")
+@RequestMapping("/api/v1/medico")
 public class MedicoController {
 
     @Autowired

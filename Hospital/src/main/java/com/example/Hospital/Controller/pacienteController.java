@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Hospital.Exception.RecursoNoEncontradoException;
 import com.example.Hospital.Model.Paciente;
 import com.example.Hospital.Service.PacienteService;
 
 @RestController
 @RequestMapping("/api/v1/pacientes")
-public class pacienteController {
+public class PacienteController {
 
     @Autowired
     PacienteService pacienteService;
@@ -36,48 +37,43 @@ public class pacienteController {
     @GetMapping("/nombre/{nombre}")
     public ResponseEntity<?> buscarPorNombre(@PathVariable String nombre) {
         try {
-            List<Paciente> pacientes = pacienteService.buscarPorNombre(nombre);
-            return ResponseEntity.ok(pacientes);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok(pacienteService.buscarPorNombre(nombre));
+        } catch (RecursoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         try {
-            Paciente paciente = pacienteService.buscarPorId(id);
-            return ResponseEntity.ok(paciente);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok(pacienteService.buscarPorId(id));
+        } catch (RecursoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @GetMapping("/correo/{correo}")
     public ResponseEntity<?> buscarPorCorreo(@PathVariable String correo) {
         try {
-            Paciente paciente = pacienteService.buscarPorCorreo(correo);
-            return ResponseEntity.ok(paciente);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok(pacienteService.buscarPorCorreo(correo));
+        } catch (RecursoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @GetMapping("/telefono/{telefono}")
-    public ResponseEntity<?> buscarPorTelefono(@PathVariable String Telefono) {
+    public ResponseEntity<?> buscarPorTelefono(@PathVariable String telefono) {
         try {
-            Paciente paciente = pacienteService.buscarPorTelefono(Telefono);
-            return ResponseEntity.ok(paciente);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok(pacienteService.buscarPorTelefono(telefono));
+        } catch (RecursoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PostMapping
     public ResponseEntity<?> guardarPaciente(@RequestBody Paciente paciente) {
         try {
-            Paciente pacienteGuardado = pacienteService.guardar(paciente);
-            return ResponseEntity.status(HttpStatus.CREATED).body(pacienteGuardado);
+            return ResponseEntity.status(HttpStatus.CREATED).body(pacienteService.guardar(paciente));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -86,8 +82,9 @@ public class pacienteController {
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarPaciente(@PathVariable Integer id, @RequestBody Paciente paciente) {
         try {
-            Paciente pacienteActualizado = pacienteService.modificar(id, paciente);
-            return ResponseEntity.ok(pacienteActualizado);
+            return ResponseEntity.ok(pacienteService.modificar(id, paciente));
+        } catch (RecursoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -98,8 +95,8 @@ public class pacienteController {
         try {
             pacienteService.eliminar(id);
             return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RecursoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }

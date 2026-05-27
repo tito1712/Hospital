@@ -1,5 +1,6 @@
 package com.example.Hospital.Model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +33,8 @@ public class Paciente {
     private String correo;
     private String telefono;
     private String direccion;
-    private String fecha_nacimiento;
+    @Column(name = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
 
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore

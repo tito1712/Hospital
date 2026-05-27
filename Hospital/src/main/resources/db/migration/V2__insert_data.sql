@@ -20,4 +20,20 @@ SELECT * FROM (
     SELECT 'Gabriela',            'Cruz',                  'gabriela.cruz@gmail.com',               '55501018',              'Col. Jardines 4',                   '1991-11-28'                      UNION ALL
     SELECT 'Sebastian',           'Reyes',                 'sebastian.reyes@gmail.com',             '55501019',              'Av. Libertad 67',                   '1986-04-04'                      UNION ALL
     SELECT 'Daniela',             'Moreno',                'daniela.moreno@gmail.com',              '55501020',              'Calle 15 #99',                      '1999-08-11'
-) WHERE NOT EXISTS (SELECT 1 FROM paciente);
+) WHERE NOT EXISTS (SELECT 1 FROM paciente LIMIT 1);
+
+DELETE FROM medico;
+
+INSERT INTO medico (run_medico, nombre, apellido, especialidad, jefe_turno)
+SELECT * FROM (
+    SELECT 15234871 as run_medico, 'Ricardo'   as nombre, 'Fuentes'   as apellido, 'Cardiologia'    as especialidad, 'Dr. Alvaro Soto'     as jefe_turno UNION ALL
+    SELECT 12087453,               'Patricia',             'Vega',                  'Neurologia',                    'Dra. Carmen Reyes'                 UNION ALL
+    SELECT 18356204,               'Hector',               'Salinas',               'Pediatria',                     'Dr. Mauricio Lagos'                UNION ALL
+    SELECT 11492637,               'Claudia',              'Mora',                  'Dermatologia',                  'Dra. Isabel Pinto'                 UNION ALL
+    SELECT 16783041,               'Andres',               'Pinto',                 'Traumatologia',                 'Dr. Roberto Vera'                  UNION ALL
+    SELECT 13920485,               'Valentina',            'Rios',                  'Ginecologia',                   'Dra. Monica Tapia'                 UNION ALL
+    SELECT 17641329,               'Marcos',               'Ibanez',                'Oftalmologia',                  'Dr. Cristian Moya'                 UNION ALL
+    SELECT 10258763,               'Daniela',              'Cerda',                 'Psiquiatria',                   'Dra. Andrea Nunez'                 UNION ALL
+    SELECT 19374856,               'Felipe',               'Araya',                 'Urologia',                      'Dr. Gonzalo Bravo'                 UNION ALL
+    SELECT 14502918,               'Javiera',              'Munoz',                 'Endocrinologia',                'Dra. Lorena Castro'
+);

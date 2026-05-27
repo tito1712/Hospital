@@ -29,7 +29,7 @@ public class Citamedica {
     @Column(name = "hora", nullable = false)
     private LocalTime hora;
     @Column(name = "costo", nullable = false)
-    private double costo;
+    private Double costo;
     @Column(name = "diagnostico", nullable = false)
     private String diagnostico;
     @ManyToOne
