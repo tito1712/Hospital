@@ -32,6 +32,8 @@ public class Citamedica {
     private Double costo;
     @Column(name = "diagnostico", nullable = false)
     private String diagnostico;
+    @Column(name = "correo")
+    private String correo;
     @ManyToOne
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;

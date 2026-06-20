@@ -89,6 +89,7 @@ public class CitaMedicaService {
         Optional.ofNullable(datos.getDiagnostico()).ifPresent(existente::setDiagnostico);
         Optional.ofNullable(datos.getPaciente()).ifPresent(existente::setPaciente);
         Optional.ofNullable(datos.getMedico()).ifPresent(existente::setMedico);
+        Optional.ofNullable(datos.getCorreo()).ifPresent(existente::setCorreo);
         return citaMedicaRepository.save(existente);
     }
 

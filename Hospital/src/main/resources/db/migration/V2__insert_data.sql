@@ -24,16 +24,35 @@ SELECT * FROM (
 
 DELETE FROM medico;
 
-INSERT INTO medico (run_medico, nombre, apellido, especialidad, jefe_turno)
+INSERT INTO medico (run_medico, nombre, apellido, especialidad, jefe_turno, correo)
 SELECT * FROM (
-    SELECT 15234871 as run_medico, 'Ricardo'   as nombre, 'Fuentes'   as apellido, 'Cardiologia'    as especialidad, 'Dr. Alvaro Soto'     as jefe_turno UNION ALL
-    SELECT 12087453,               'Patricia',             'Vega',                  'Neurologia',                    'Dra. Carmen Reyes'                 UNION ALL
-    SELECT 18356204,               'Hector',               'Salinas',               'Pediatria',                     'Dr. Mauricio Lagos'                UNION ALL
-    SELECT 11492637,               'Claudia',              'Mora',                  'Dermatologia',                  'Dra. Isabel Pinto'                 UNION ALL
-    SELECT 16783041,               'Andres',               'Pinto',                 'Traumatologia',                 'Dr. Roberto Vera'                  UNION ALL
-    SELECT 13920485,               'Valentina',            'Rios',                  'Ginecologia',                   'Dra. Monica Tapia'                 UNION ALL
-    SELECT 17641329,               'Marcos',               'Ibanez',                'Oftalmologia',                  'Dr. Cristian Moya'                 UNION ALL
-    SELECT 10258763,               'Daniela',              'Cerda',                 'Psiquiatria',                   'Dra. Andrea Nunez'                 UNION ALL
-    SELECT 19374856,               'Felipe',               'Araya',                 'Urologia',                      'Dr. Gonzalo Bravo'                 UNION ALL
-    SELECT 14502918,               'Javiera',              'Munoz',                 'Endocrinologia',                'Dra. Lorena Castro'
+    SELECT 15234871 as run_medico, 'Ricardo'   as nombre, 'Fuentes'   as apellido, 'Cardiologia'    as especialidad, 'Dr. Alvaro Soto'     as jefe_turno, 'ricardo.fuentes@hospital.cl'   as correo UNION ALL
+    SELECT 12087453,               'Patricia',             'Vega',                  'Neurologia',                    'Dra. Carmen Reyes',                 'patricia.vega@hospital.cl'              UNION ALL
+    SELECT 18356204,               'Hector',               'Salinas',               'Pediatria',                     'Dr. Mauricio Lagos',                'hector.salinas@hospital.cl'             UNION ALL
+    SELECT 11492637,               'Claudia',              'Mora',                  'Dermatologia',                  'Dra. Isabel Pinto',                 'claudia.mora@hospital.cl'               UNION ALL
+    SELECT 16783041,               'Andres',               'Pinto',                 'Traumatologia',                 'Dr. Roberto Vera',                  'andres.pinto@hospital.cl'               UNION ALL
+    SELECT 13920485,               'Valentina',            'Rios',                  'Ginecologia',                   'Dra. Monica Tapia',                 'valentina.rios@hospital.cl'             UNION ALL
+    SELECT 17641329,               'Marcos',               'Ibanez',                'Oftalmologia',                  'Dr. Cristian Moya',                 'marcos.ibanez@hospital.cl'              UNION ALL
+    SELECT 10258763,               'Daniela',              'Cerda',                 'Psiquiatria',                   'Dra. Andrea Nunez',                 'daniela.cerda@hospital.cl'              UNION ALL
+    SELECT 19374856,               'Felipe',               'Araya',                 'Urologia',                      'Dr. Gonzalo Bravo',                 'felipe.araya@hospital.cl'               UNION ALL
+    SELECT 14502918,               'Javiera',              'Munoz',                 'Endocrinologia',                'Dra. Lorena Castro',                'javiera.munoz@hospital.cl'
 );
+
+INSERT INTO citamedica (fecha, hora, costo, diagnostico, correo, paciente_id, medico_id)
+SELECT fecha, hora, costo, diagnostico, correo, paciente_id, medico_id FROM (
+    SELECT '2026-01-08' as fecha, '09:00:00' as hora, 35000.0 as costo, 'Hipertension leve'          as diagnostico, 'cita01@hospital.cl' as correo, (SELECT id FROM paciente WHERE nombre='Carlos'    AND apellido='Martinez') as paciente_id, (SELECT id FROM medico WHERE nombre='Ricardo'   AND apellido='Fuentes') as medico_id UNION ALL
+    SELECT '2026-01-09',          '10:00:00',          28000.0,          'Migraña cronica',                          'cita02@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Ana'       AND apellido='Lopez'),                         (SELECT id FROM medico WHERE nombre='Patricia'  AND apellido='Vega')                 UNION ALL
+    SELECT '2026-01-10',          '11:00:00',          22000.0,          'Fiebre y tos',                             'cita03@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Luis'      AND apellido='Garcia'),                        (SELECT id FROM medico WHERE nombre='Hector'    AND apellido='Salinas')             UNION ALL
+    SELECT '2026-01-13',          '08:30:00',          31000.0,          'Dermatitis alergica',                      'cita04@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Maria'     AND apellido='Hernandez'),                     (SELECT id FROM medico WHERE nombre='Claudia'   AND apellido='Mora')                UNION ALL
+    SELECT '2026-01-14',          '14:00:00',          45000.0,          'Fractura de muñeca',                       'cita05@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Jorge'     AND apellido='Perez'),                         (SELECT id FROM medico WHERE nombre='Andres'    AND apellido='Pinto')               UNION ALL
+    SELECT '2026-01-15',          '15:30:00',          38000.0,          'Control prenatal',                         'cita06@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Laura'     AND apellido='Sanchez'),                       (SELECT id FROM medico WHERE nombre='Valentina' AND apellido='Rios')               UNION ALL
+    SELECT '2026-01-16',          '09:30:00',          27000.0,          'Vision borrosa',                           'cita07@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Miguel'    AND apellido='Ramirez'),                       (SELECT id FROM medico WHERE nombre='Marcos'    AND apellido='Ibanez')              UNION ALL
+    SELECT '2026-01-17',          '16:00:00',          52000.0,          'Ansiedad y depresion',                     'cita08@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Sofia'     AND apellido='Torres'),                        (SELECT id FROM medico WHERE nombre='Daniela'   AND apellido='Cerda')               UNION ALL
+    SELECT '2026-01-20',          '10:30:00',          33000.0,          'Infeccion urinaria',                       'cita09@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Roberto'   AND apellido='Flores'),                        (SELECT id FROM medico WHERE nombre='Felipe'    AND apellido='Araya')               UNION ALL
+    SELECT '2026-01-21',          '11:30:00',          41000.0,          'Diabetes tipo 2',                          'cita10@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Valentina' AND apellido='Diaz'),                          (SELECT id FROM medico WHERE nombre='Javiera'   AND apellido='Munoz')               UNION ALL
+    SELECT '2026-01-22',          '08:00:00',          36000.0,          'Arritmia cardiaca',                        'cita11@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Fernando'  AND apellido='Morales'),                       (SELECT id FROM medico WHERE nombre='Ricardo'   AND apellido='Fuentes')             UNION ALL
+    SELECT '2026-01-23',          '13:00:00',          29000.0,          'Dolor de cabeza cronico',                  'cita12@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Isabella'  AND apellido='Jimenez'),                       (SELECT id FROM medico WHERE nombre='Patricia'  AND apellido='Vega')                UNION ALL
+    SELECT '2026-01-24',          '15:00:00',          24000.0,          'Control pediatrico',                       'cita13@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Andres'    AND apellido='Ruiz'),                          (SELECT id FROM medico WHERE nombre='Hector'    AND apellido='Salinas')             UNION ALL
+    SELECT '2026-01-27',          '09:00:00',          48000.0,          'Esguince de tobillo',                      'cita14@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Camila'    AND apellido='Vargas'),                        (SELECT id FROM medico WHERE nombre='Andres'    AND apellido='Pinto')               UNION ALL
+    SELECT '2026-01-28',          '10:00:00',          55000.0,          'Hipotiroidismo',                           'cita15@hospital.cl',             (SELECT id FROM paciente WHERE nombre='Diego'     AND apellido='Castro'),                        (SELECT id FROM medico WHERE nombre='Javiera'   AND apellido='Munoz')
+) WHERE NOT EXISTS (SELECT 1 FROM citamedica LIMIT 1);

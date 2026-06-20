@@ -76,6 +76,7 @@ public class MedicoService {
         Optional.ofNullable(datos.getApellido()).ifPresent(existente::setApellido);
         Optional.ofNullable(datos.getEspecialidad()).ifPresent(existente::setEspecialidad);
         Optional.ofNullable(datos.getJefe_turno()).ifPresent(existente::setJefe_turno);
+        Optional.ofNullable(datos.getCorreo()).ifPresent(existente::setCorreo);
         return medicoRepository.save(existente);
     }
 

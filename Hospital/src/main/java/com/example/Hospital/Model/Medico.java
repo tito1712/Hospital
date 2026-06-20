@@ -35,6 +35,8 @@ public class Medico {
     private String especialidad;
     @Column(name = "jefe_turno")
     private String jefe_turno;
+    @Column(name = "correo", unique = true)
+    private String correo;
     @OneToMany(mappedBy = "medico")
     @JsonIgnore
     private List<Citamedica> citamedicas;
